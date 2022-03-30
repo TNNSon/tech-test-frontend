@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingSpinner } from "../components/loading/LoadingSpinner";
+import { LoadingSpinner } from "../loading/LoadingSpinner";
 
 export const JobList: React.FC<any> = ({ items, loading }) => {
   return (

@@ -1,12 +1,53 @@
-import React from "react";
-import { IAppTabContainer } from "../common/types";
+import React, { useEffect, useState } from "react";
+import {
+  IAppTabContainer,
+  Job,
+  JobAllocations,
+  Resource,
+} from "../common/types";
 
 import { SectionGroup } from "../components/section/SectionGroup";
 import { SectionPanel } from "../components/section/SectionPanel";
+import { JobDetails } from "../components/JobDetails/JobDetails";
 
 import "./QuestionThree.css";
 
-export const QuestionThree: React.FC<IAppTabContainer> = () => {
+export const QuestionThree: React.FC<IAppTabContainer> = ({ service }) => {
+  const [jobList, setJobList] = useState<
+    (Job & { allocations: JobAllocations[] })[]
+  >([]);
+  const [resourceList, setResourceList] = useState<Resource[]>([]);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const [jobs, jobAllocations] = await Promise.all([
+        service.getJobs(),
+        service.getJobAllocations(),
+      ]);
+
+      const results = jobs.map((x) => {
+        return {
+          ...x,
+          allocations: jobAllocations.filter((i) => i.jobId === x.id),
+        };
+      });
+      let filledArray = new Array<Job & { allocations: JobAllocations[] }>(10);
+      setJobList([
+        ...results,
+        ...filledArray.fill({
+          contactId: "0",
+          allocations: [],
+          id: 1,
+          location: "Brisbane",
+          name: "Pick up a trailer",
+          start: "2018-09-01T13:00:00Z",
+          end: "2018-09-01T13:15:00Z",
+        }),
+      ]);
+    };
+    setResourceList(new Array(10).fill(null));
+    fetchJobs();
+  }, [service]);
+
   return (
     <SectionGroup>
       <SectionPanel>
@@ -30,83 +71,14 @@ export const QuestionThree: React.FC<IAppTabContainer> = () => {
             </header>
             <div className="main">
               <section className="job-list container overflow-y">
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Build a fence</b> (Job #0)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Sat Sep 01 2018</div>
-                  <div className="job-time">10:00 - 11:00</div>
-                  <div className="job-resources">3</div>
-                </div>
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Build a shed</b> (Job #1)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Sat Sep 01 2018</div>
-                  <div className="job-time">10:15 - 11:00</div>
-                  <div className="job-resources">2</div>
-                </div>
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Shield some wiring</b> (Job #3)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Brisbane</div>
-                  <div className="job-time">9:00 - 13:00</div>
-                  <div className="job-resources">2</div>
-                </div>
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Build a fence</b> (Job #0)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Sat Sep 01 2018</div>
-                  <div className="job-time">10:00 - 11:00</div>
-                  <div className="job-resources">3</div>
-                </div>
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Build a fence</b> (Job #0)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Sat Sep 01 2018</div>
-                  <div className="job-time">10:00 - 11:00</div>
-                  <div className="job-resources">3</div>
-                </div>
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Build a fence</b> (Job #0)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Sat Sep 01 2018</div>
-                  <div className="job-time">10:00 - 11:00</div>
-                  <div className="job-resources">3</div>
-                </div>
-                <div className="job-item">
-                  <div className="job-title">
-                    <b>Build a fence</b> (Job #0)
-                  </div>
-                  <div className="job-contact">Brisbane</div>
-                  <div className="job-date">Sat Sep 01 2018</div>
-                  <div className="job-time">10:00 - 11:00</div>
-                  <div className="job-resources">3</div>
-                </div>
+                {jobList.map((x, i) => (
+                  <JobDetails data={x} index={i} key={i} />
+                ))}
               </section>
               <section className="contact-list container overflow-y">
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
-                <div className="contact-item"></div>
+                {resourceList.map((x, i) => (
+                  <div key={i} className="contact-item"></div>
+                ))}
               </section>
             </div>
           </main>

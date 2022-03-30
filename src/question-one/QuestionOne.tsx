@@ -3,7 +3,7 @@ import { IAppTabContainer } from "../common/types";
 
 import { SectionGroup } from "../components/section/SectionGroup";
 import { SectionPanel } from "../components/section/SectionPanel";
-import { JobList } from "./JobList";
+import { JobList } from "../components/JobList/JobList";
 
 import "./QuestionOne.css";
 
@@ -26,7 +26,6 @@ export const QuestionOne: React.FC<IAppTabContainer> = ({ service }) => {
   const [jobs, setJobs] = useState<any[]>([]);
 
   const handleInpuChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     debounceDropDown(e.target.value);
   };
 

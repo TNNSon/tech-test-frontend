@@ -1,0 +1,35 @@
+.job-item {
+  position: relative;
+  padding: 16px;
+  margin: 16px 0;
+  background-color: #fff;
+}
+.job-resources {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  color: var(--main-color);
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.job-location {
+  margin-bottom: 12px;
+}
+/**/
+.job-title {
+  font-size: 18px;
+}
+.job-title b {
+  font-weight: 600;
+  color: #223048;
+}
+.job-time {
+  color: #8d8383;
+  font-weight: 500;
+}
