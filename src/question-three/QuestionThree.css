@@ -1,0 +1,123 @@
+.app__content-blank {
+  height: calc(100vh - 131px);
+}
+.question-three {
+  overflow: hidden;
+  --main-color: #3d9bff;
+  --color-white: #fff;
+  text-decoration: none;
+  list-style-type: none;
+  display: flex;
+  justify-content: flex-start;
+  height: calc(100vh - 131px);
+}
+/* Navigation */
+.question-three .navigation {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 8px;
+  background-color: #223048;
+}
+li {
+  text-decoration: none;
+  margin-bottom: 8px;
+  color: #c4c4c4;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.round {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background-color: currentColor;
+}
+.setting {
+  color: #c4c4c4;
+}
+/* End Navigation*/
+
+/* Main */
+.question-three .header {
+  background-color: var(--main-color);
+  color: var(--color-white);
+}
+.header h2 {
+  margin: 0;
+  line-height: 56px;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+main .main {
+  display: flex;
+  overflow-y: auto;
+}
+.container {
+  padding: 0 16px;
+}
+/* End Main */
+
+.job-list {
+  width: 400px;
+  background-color: #e4eef1;
+  color: #c4c4c4;
+  font-weight: 400;
+  font-size: 14px;
+}
+.job-item {
+  position: relative;
+  padding: 16px;
+  margin: 16px 0;
+  background-color: #fff;
+}
+.job-resources {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  color: var(--main-color);
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.job-contact {
+  margin-bottom: 12px;
+}
+/**/
+.job-title {
+  font-size: 18px;
+}
+.job-title b {
+  font-weight: 600;
+  color: #223048;
+}
+.job-time {
+  color: #8d8383;
+  font-weight: 500;
+}
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  flex: 1;
+}
+.contact-list .contact-item {
+  background-color: #e4eef1;
+  margin: 16px 0;
+  flex: 0 0 200px;
+}
+.overflow-y {
+  overflow-y: auto;
+  height: 100%;
+}
