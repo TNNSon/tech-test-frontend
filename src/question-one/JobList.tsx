@@ -1,6 +1,7 @@
 import React from "react";
+import { LoadingSpinner } from "../components/loading/LoadingSpinner";
 
-export const JobList: React.FC<any> = ({ items }) => {
+export const JobList: React.FC<any> = ({ items, loading }) => {
   return (
     <table>
       <thead>
@@ -12,6 +13,7 @@ export const JobList: React.FC<any> = ({ items }) => {
         </tr>
       </thead>
       <tbody>
+        {loading && <LoadingSpinner />}
         {items.map((job: any, index: number) => (
           <tr key={index}>
             <td>{index + 1}</td>

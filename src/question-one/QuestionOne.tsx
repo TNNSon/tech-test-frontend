@@ -30,18 +30,19 @@ export const QuestionOne: React.FC<IAppTabContainer> = ({ service }) => {
     debounceDropDown(e.target.value);
   };
 
-  const fetchApi = (e: string) => {
-    if (e.length >= 3) {
+  const fetchApi = (value: string) => {
+    if (value.length >= 3) {
       setLoading(true);
       service
-        .getJobsWithSearchTerm(e)
+        .getJobsWithSearchTerm(value)
         .then((rs) => {
-          setLoading(false);
           setJobs(rs);
         })
         .catch((err) => {
-          setLoading(false);
           setJobs([]);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       setJobs([]);
@@ -65,10 +66,7 @@ export const QuestionOne: React.FC<IAppTabContainer> = ({ service }) => {
             onChange={handleInpuChange}
             placeholder="Search Job's name"
           />
-          {loading && (
-            <div className="loader" data-testid="loading" role="alert"></div>
-          )}
-          <JobList items={jobs} />
+          <JobList items={jobs} loading={loading} />
         </div>
       </SectionPanel>
     </SectionGroup>

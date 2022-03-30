@@ -23,9 +23,7 @@ test("Render first time", async () => {
 });
 
 test("Input data with length >= 3 and have response. It show data as expected", async () => {
-  const { container, rerender } = render(
-    <QuestionOne service={mockDataService} />
-  );
+  const { container } = render(<QuestionOne service={mockDataService} />);
   const input = getByTestId(container, "search");
   fireEvent.change(input, { target: { value: "Build" } });
 

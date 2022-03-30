@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { IAppTabContainer, Resource } from "../common/types";
+import { Allocation, IAppTabContainer, Resource } from "../common/types";
 
 import { SectionGroup } from "../components/section/SectionGroup";
 import { SectionPanel } from "../components/section/SectionPanel";
+import { getAllocationsByResource } from "./QuestionTwo.service";
 
 interface ResourceSchedule {
   resourceName: string;
   resourceId: number;
   allocations: Allocation[];
-}
-interface Allocation {
-  allocType: "job" | "activity";
-  name: string;
-  start: string;
-  end: string;
 }
 
 function handle<T>(promise: Promise<T>) {
@@ -63,57 +58,18 @@ export const QuestionTwo: React.FC<IAppTabContainer> = ({ service }) => {
       if (!!jobsErr) {
         //handle error
       }
-      resources.forEach((i: { id: number; name: any }) => {
-        let allocations: Allocation[] = [];
-
-        if (!!activityAllocations && activityAllocations.length > 0) {
-          let filterActivities = activityAllocations.filter(
-            (x: { resourceId: number }) => x.resourceId === i.id
-          );
-          if (
-            !!filterActivities &&
-            filterActivities.length > 0 &&
-            !!activities &&
-            activities.length > 0
-          ) {
-            filterActivities.forEach((r: { activityId: any }) => {
-              let activity = activities.find(
-                (a: { id: any }) => a.id === r.activityId
-              );
-              if (!!activity) {
-                allocations.push({
-                  allocType: "activity",
-                  name: activity.name,
-                  start: activity.start,
-                  end: activity.end,
-                });
-              }
-            });
-          }
-        }
-        if (jobAllocations && jobAllocations.length > 0) {
-          let filterJobs = jobAllocations.filter(
-            (x: { resourceId: number }) => x.resourceId === i.id
-          );
-          if (!!filterJobs && filterJobs.length > 0) {
-            filterJobs.forEach((r: { jobId: any }) => {
-              let job = jobs.find((a: { id: any }) => a.id === r.jobId);
-              if (!!job) {
-                allocations.push({
-                  allocType: "job",
-                  name: job.name,
-                  start: job.start,
-                  end: job.end,
-                });
-              }
-            });
-          }
-        }
+      resources.forEach((i: { id: number; name: string }) => {
+        let resourceActivity = getAllocationsByResource(
+          activityAllocations,
+          i.id,
+          activities
+        );
+        let resourceJob = getAllocationsByResource(jobAllocations, i.id, jobs);
 
         data.push({
           resourceName: i.name,
           resourceId: i.id,
-          allocations: allocations,
+          allocations: [...resourceActivity, ...resourceJob],
         });
       });
       setActivities(data);
